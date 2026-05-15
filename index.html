@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <title>SHIELD HRV Risk Prediction System</title>
+  <title>SHIELD SMART on FHIR</title>
 
   <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.min.js"></script>
 
@@ -19,12 +19,12 @@
     }
 
     .page {
-      display: flex;
       min-height: 100vh;
+      display: flex;
     }
 
     .sidebar {
-      width: 260px;
+      width: 250px;
       background: linear-gradient(180deg, #0f2a44, #061827);
       color: white;
       padding: 28px 22px;
@@ -33,202 +33,161 @@
     .brand {
       font-size: 32px;
       font-weight: 800;
+      letter-spacing: 0.5px;
       margin-bottom: 6px;
     }
 
-    .subtitle {
-      font-size: 14px;
+    .brand-subtitle {
       color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.5;
       margin-bottom: 36px;
     }
 
+    .nav-title {
+      color: #94a3b8;
+      font-size: 12px;
+      margin: 24px 0 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
     .nav-item {
-      padding: 14px 16px;
+      padding: 13px 14px;
       border-radius: 12px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       color: #e2e8f0;
+      font-size: 15px;
     }
 
     .nav-item.active {
       background: #2563eb;
       color: white;
       font-weight: 700;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
     }
 
     .about {
-      margin-top: 80px;
+      margin-top: 70px;
       padding: 16px;
-      border-radius: 16px;
+      border-radius: 18px;
       background: rgba(255, 255, 255, 0.08);
-      font-size: 13px;
       color: #dbeafe;
+      font-size: 13px;
       line-height: 1.6;
     }
 
     .main {
       flex: 1;
-      padding: 30px;
+      padding: 32px;
     }
 
-    .header {
+    .hero {
       background: white;
-      padding: 24px 28px;
-      border-radius: 20px;
+      border-radius: 22px;
+      padding: 28px 30px;
       box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
       margin-bottom: 24px;
     }
 
-    .header h1 {
+    .hero h1 {
       margin: 0;
       font-size: 30px;
+      color: #0f172a;
     }
 
-    .header p {
-      margin: 8px 0 0;
+    .hero p {
+      margin: 10px 0 0;
       color: #475569;
       font-size: 16px;
     }
 
-    .status-dot {
-      display: inline-block;
+    .status-line {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .dot {
       width: 10px;
       height: 10px;
-      background: #22c55e;
       border-radius: 50%;
-      margin: 0 8px 0 16px;
+      background: #f59e0b;
+      display: inline-block;
+    }
+
+    .dot.connected {
+      background: #22c55e;
+    }
+
+    .dot.error {
+      background: #ef4444;
     }
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 18px;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
     }
 
-    .card, .panel, .metrics {
+    .card {
       background: white;
       border-radius: 18px;
       padding: 22px;
       box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
     }
 
-    .card h3, .panel h3, .metrics h3 {
-      margin-top: 0;
-      font-size: 16px;
+    .card-title {
+      font-size: 15px;
+      color: #475569;
+      margin-bottom: 12px;
+      font-weight: 700;
     }
 
-    .value {
-      font-size: 24px;
+    .card-value {
+      font-size: 22px;
       font-weight: 800;
-      margin-top: 12px;
+      color: #0f172a;
+      word-break: break-all;
     }
 
-    .success {
-      color: #16a34a;
-    }
-
-    .warning {
-      color: #f59e0b;
-    }
-
-    .muted {
+    .card-note {
+      margin-top: 8px;
       color: #64748b;
-      font-size: 14px;
+      font-size: 13px;
+      line-height: 1.5;
     }
 
-    .dashboard {
-      display: grid;
-      grid-template-columns: 1fr 1.5fr;
-      gap: 18px;
-      margin-bottom: 22px;
+    .panel {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
     }
 
-    .risk-box {
-      text-align: center;
-      padding: 28px 0;
+    .panel h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
     }
 
-    .risk-level {
-      font-size: 42px;
-      font-weight: 900;
-      color: #f59e0b;
-      margin: 20px 0 8px;
-    }
-
-    .score {
-      display: inline-block;
-      background: #eff6ff;
-      color: #1d4ed8;
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 14px;
-      margin-bottom: 16px;
-    }
-
-    .recommendation {
-      text-align: left;
-      background: #f8fafc;
-      border-radius: 14px;
-      padding: 16px;
-      line-height: 1.6;
-      font-size: 14px;
-    }
-
-    .chart-placeholder {
-      height: 260px;
-      border-radius: 16px;
-      background:
-        linear-gradient(180deg, rgba(37,99,235,0.08), rgba(37,99,235,0.01)),
-        repeating-linear-gradient(
-          to bottom,
-          transparent,
-          transparent 48px,
-          #e2e8f0 49px
-        );
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .panel p {
+      margin: 0;
       color: #64748b;
-      font-weight: 600;
+      line-height: 1.7;
     }
 
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 14px;
-    }
-
-    .metric {
-      background: #f8fafc;
-      border-radius: 16px;
-      padding: 16px;
-      text-align: center;
-    }
-
-    .metric-number {
-      font-size: 24px;
-      font-weight: 800;
-      margin: 8px 0;
-    }
-
-    .tag {
-      display: inline-block;
-      padding: 5px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      background: #dcfce7;
-      color: #15803d;
-    }
-
-    .tag.low {
-      background: #fee2e2;
-      color: #dc2626;
-    }
-
-    .actions {
+    .action-row {
       margin-top: 22px;
       display: flex;
       gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
     button {
@@ -236,57 +195,74 @@
       color: white;
       border: none;
       border-radius: 14px;
-      padding: 14px 28px;
+      padding: 14px 26px;
       font-size: 16px;
       font-weight: 700;
       cursor: pointer;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
     }
 
     button:hover {
       background: #1d4ed8;
     }
 
-    .secondary {
-      background: white;
-      color: #2563eb;
-      border: 1px solid #cbd5e1;
-    }
-
-    .secondary:hover {
-      background: #f8fafc;
+    .hint {
+      color: #64748b;
+      font-size: 14px;
     }
 
     details {
-      margin-top: 22px;
       background: white;
-      border-radius: 16px;
-      padding: 18px;
+      border-radius: 18px;
+      padding: 20px;
       box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
     }
 
     summary {
       cursor: pointer;
-      font-weight: 700;
+      font-weight: 800;
       color: #334155;
     }
 
     pre {
+      margin-top: 16px;
       background: #0f172a;
       color: #dbeafe;
       padding: 18px;
       border-radius: 14px;
       overflow-x: auto;
       white-space: pre-wrap;
-      margin-top: 16px;
+      font-size: 13px;
+      line-height: 1.6;
     }
 
-    @media (max-width: 1100px) {
-      .cards, .metric-grid, .dashboard {
-        grid-template-columns: 1fr;
+    .success-text {
+      color: #16a34a;
+    }
+
+    .warning-text {
+      color: #d97706;
+    }
+
+    .error-text {
+      color: #dc2626;
+    }
+
+    @media (max-width: 1000px) {
+      .page {
+        display: block;
       }
 
       .sidebar {
         display: none;
+      }
+
+      .main {
+        padding: 20px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -294,135 +270,110 @@
 
 <body>
   <div class="page">
+
     <aside class="sidebar">
       <div class="brand">SHIELD</div>
-      <div class="subtitle">Clinical Decision Support</div>
 
-      <div class="nav-item active">Dashboard</div>
+      <div class="brand-subtitle">
+        SMART on FHIR<br />
+        HRV Decision Support
+      </div>
+
+      <div class="nav-title">System</div>
+
+      <div class="nav-item active">FHIR Launch</div>
       <div class="nav-item">Patient Context</div>
-      <div class="nav-item">Observations</div>
-      <div class="nav-item">HRV Analysis</div>
-      <div class="nav-item">FHIR Connection</div>
+      <div class="nav-item">Observation</div>
+      <div class="nav-item">HRV App</div>
 
       <div class="about">
-        <strong>About SHIELD</strong><br />
-        AI-powered HRV analysis system for clinical decision support.
+        <strong>About</strong><br />
+        This page connects to the FHIR server, verifies patient observation data,
+        and launches the SHIELD HRV analysis app.
       </div>
     </aside>
 
     <main class="main">
-      <section class="header">
-        <h1>SHIELD HRV Risk Prediction System</h1>
+
+      <section class="hero">
+        <h1>SHIELD SMART on FHIR Launcher</h1>
+
         <p>
-          SMART on FHIR Integration
-          <span class="status-dot"></span>
-          <span id="topStatus">Connecting...</span>
+          Connect patient context and selected HRV observation data
+          to the SHIELD analysis app.
         </p>
+
+        <div class="status-line">
+          <span class="dot" id="statusDot"></span>
+          <span id="topStatus">Initializing SMART connection...</span>
+        </div>
       </section>
 
       <section class="cards">
+
         <div class="card">
-          <h3>FHIR Connection</h3>
-          <div class="value success" id="connectionStatus">Connecting</div>
-          <p class="muted">SMART on FHIR Server</p>
+          <div class="card-title">FHIR Server</div>
+          <div class="card-value" id="serverStatus">Connecting...</div>
+          <div class="card-note">
+            SMART authorization and server context
+          </div>
         </div>
 
         <div class="card">
-          <h3>Patient Information</h3>
-          <p class="muted">Patient ID</p>
-          <div class="value" id="patientId">Waiting...</div>
+          <div class="card-title">Patient Context</div>
+          <div class="card-value" id="patientStatus">Waiting...</div>
+          <div class="card-note">
+            Selected patient from SMART launch
+          </div>
         </div>
 
         <div class="card">
-          <h3>Latest Observation</h3>
-          <p class="muted">Observation ID</p>
-          <div class="value" id="observationId">obs-HRV-003</div>
+          <div class="card-title">Observation</div>
+          <div class="card-value" id="observationStatus">
+            obs-HRV-003
+          </div>
+          <div class="card-note">
+            Observation selected for HRV analysis
+          </div>
         </div>
 
-        <div class="card">
-          <h3>Data Status</h3>
-          <div class="value" id="dataStatus">Loading</div>
-          <p class="muted">Observation(s)</p>
-        </div>
       </section>
 
-      <section class="dashboard">
-        <div class="panel">
-          <h3>HRV Risk Assessment</h3>
-          <div class="risk-box">
-            <div class="risk-level">Moderate</div>
-            <div class="score">Risk Score: 0.62 / 1.00</div>
+      <section class="panel">
 
-            <div class="recommendation">
-              <strong>AI Clinical Recommendation</strong><br />
-              Patient shows moderate HRV risk. Continue monitoring and consider lifestyle assessment.
-            </div>
-          </div>
+        <h2>Launch HRV Analysis</h2>
+
+        <p>
+          After the SMART connection is ready and the observation is verified,
+          you can open the SHIELD HRV app with the current patient
+          and observation data.
+        </p>
+
+        <div class="action-row">
+          <button id="go">Open SHIELD HRV App</button>
+
+          <span class="hint" id="actionHint">
+            Waiting for observation verification...
+          </span>
         </div>
 
-        <div class="panel">
-          <h3>HRV Trends</h3>
-          <div class="chart-placeholder">
-            HRV / ECG trend preview
-          </div>
-        </div>
       </section>
-
-      <section class="metrics">
-        <h3>HRV Key Metrics</h3>
-
-        <div class="metric-grid">
-          <div class="metric">
-            Heart Rate
-            <div class="metric-number">72</div>
-            <span class="tag">Normal</span>
-          </div>
-
-          <div class="metric">
-            SDNN
-            <div class="metric-number">45.6</div>
-            <span class="tag low">Low</span>
-          </div>
-
-          <div class="metric">
-            RMSSD
-            <div class="metric-number">28.3</div>
-            <span class="tag low">Low</span>
-          </div>
-
-          <div class="metric">
-            LF/HF Ratio
-            <div class="metric-number">2.35</div>
-            <span class="tag low">High</span>
-          </div>
-
-          <div class="metric">
-            pNN50
-            <div class="metric-number">12.5%</div>
-            <span class="tag low">Low</span>
-          </div>
-        </div>
-      </section>
-
-      <div class="actions">
-        <button id="go">Start HRV Analysis</button>
-        <button class="secondary" onclick="location.reload()">Refresh Data</button>
-      </div>
 
       <details>
         <summary>Technical Details</summary>
+
         <pre id="info">Initializing...</pre>
       </details>
+
     </main>
   </div>
 
   <script>
     /**********************************************************
-     * 下游 SHIELD App
+     * SHIELD APP URL
      **********************************************************/
     const SHINY_URL = "https://smart-on-fhir-hrv-6qh6.onrender.com/";
 
-    // 指定的 Observation ID
     const OBS_ID = "obs-HRV-003";
 
     let accessToken = null;
@@ -430,34 +381,79 @@
     let pid = null;
     let OBS_URL = null;
 
+    const statusDot = document.getElementById("statusDot");
+    const topStatus = document.getElementById("topStatus");
+    const serverStatus = document.getElementById("serverStatus");
+    const patientStatus = document.getElementById("patientStatus");
+    const observationStatus = document.getElementById("observationStatus");
+    const actionHint = document.getElementById("actionHint");
+    const info = document.getElementById("info");
+
+    function setConnected(message) {
+      statusDot.className = "dot connected";
+      topStatus.textContent = message;
+      topStatus.className = "success-text";
+    }
+
+    function setLoading(message) {
+      statusDot.className = "dot";
+      topStatus.textContent = message;
+      topStatus.className = "warning-text";
+    }
+
     function setError(message) {
-      document.getElementById("topStatus").textContent = "Error";
-      document.getElementById("connectionStatus").textContent = "Error";
-      document.getElementById("connectionStatus").className = "value warning";
-      document.getElementById("dataStatus").textContent = "Error";
-      document.getElementById("info").textContent = "❌ Error:\n" + message;
+      statusDot.className = "dot error";
+      topStatus.textContent = "Connection error";
+      topStatus.className = "error-text";
+
+      serverStatus.textContent = "Error";
+      serverStatus.className = "card-value error-text";
+
+      patientStatus.textContent = "Unavailable";
+
+      actionHint.textContent =
+        "Please check the technical details below.";
+
+      info.textContent = "❌ Error:\n" + message;
     }
 
     /**********************************************************
      * SMART OAuth Ready
      **********************************************************/
     FHIR.oauth2.ready()
+
       .then(client => {
-        accessToken = client.state.tokenResponse.access_token;
-        fhirBase = client.state.serverUrl;
-        pid = client.patient.id;
+
+        setLoading(
+          "SMART OAuth ready. Verifying observation..."
+        );
+
+        accessToken =
+          client.state.tokenResponse.access_token;
+
+        fhirBase =
+          client.state.serverUrl;
+
+        pid =
+          client.patient.id;
 
         if (!pid) {
-          throw new Error("No patient context (launch/patient missing)");
+          throw new Error(
+            "No patient context (launch/patient missing)"
+          );
         }
 
-        document.getElementById("topStatus").textContent = "Connected";
-        document.getElementById("connectionStatus").textContent = "Connected";
-        document.getElementById("patientId").textContent = pid;
-        document.getElementById("observationId").textContent = OBS_ID;
-        document.getElementById("dataStatus").textContent = "Searching";
+        serverStatus.textContent = "Connected";
+        serverStatus.className =
+          "card-value success-text";
 
-        document.getElementById("info").textContent =
+        patientStatus.textContent =
+          "Patient/" + pid;
+
+        observationStatus.textContent =
+          OBS_ID;
+
+        info.textContent =
           "✅ SMART OAuth Ready\n\n" +
           "FHIR Server:\n" + fhirBase + "\n\n" +
           "Selected Patient:\nPatient/" + pid + "\n\n" +
@@ -469,14 +465,18 @@
           `Observation?subject=Patient/${pid}&_id=${OBS_ID}`
         );
       })
+
       .then(bundle => {
+
         if (!bundle.entry || bundle.entry.length === 0) {
+
           throw new Error(
             `Observation _id=${OBS_ID} not found under Patient/${pid}`
           );
         }
 
         if (bundle.entry.length !== 1) {
+
           throw new Error(
             `Unexpected result: ${bundle.entry.length} Observations returned`
           );
@@ -485,32 +485,60 @@
         const obs = bundle.entry[0].resource;
 
         if (obs.id !== OBS_ID) {
-          throw new Error("Returned Observation ID does not match requested _id");
+
+          throw new Error(
+            "Returned Observation ID does not match requested _id"
+          );
         }
 
-        if (obs.subject?.reference !== `Patient/${pid}`) {
-          throw new Error("Observation subject does not match selected patient");
+        if (
+          obs.subject?.reference !== `Patient/${pid}`
+        ) {
+
+          throw new Error(
+            "Observation subject does not match selected patient"
+          );
         }
 
-        OBS_URL = `${fhirBase}/Observation/${OBS_ID}`;
+        OBS_URL =
+          `${fhirBase}/Observation/${OBS_ID}`;
 
-        document.getElementById("dataStatus").textContent = "1";
-        document.getElementById("info").textContent +=
+        setConnected(
+          "FHIR connection ready. Observation verified."
+        );
+
+        observationStatus.textContent = "Verified";
+        observationStatus.className =
+          "card-value success-text";
+
+        actionHint.textContent =
+          "Ready to open SHIELD HRV App.";
+
+        info.textContent +=
           JSON.stringify(obs, null, 2) +
           "\n\n✅ Confirmed Observation:\n" +
           OBS_URL;
       })
+
       .catch(err => {
+
         setError(err.message);
-        console.error("SMART Error:", err);
+
+        console.error(
+          "SMART Error:",
+          err
+        );
       });
 
     /**********************************************************
-     * 傳遞給 SHIELD APP
+     * Open SHIELD APP
      **********************************************************/
     document.getElementById("go").onclick = () => {
+
       if (!OBS_URL || !pid) {
+
         alert("Observation not ready");
+
         return;
       }
 
@@ -526,10 +554,3 @@
   </script>
 </body>
 </html>
-pre {
-  background: #0f172a;
-  color: #dbeafe;
-  padding: 18px;
-  border-radius: 14px;
-  overflow-x: auto;
-}
